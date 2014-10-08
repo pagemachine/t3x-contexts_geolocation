@@ -24,7 +24,7 @@
  * @uses       http://pear.php.net/package/Net_GeoIP/
  */
 class Tx_Contexts_Geolocation_Adapter_NetGeoIp
-    extends Tx_Contexts_Geolocation_Adapter
+    extends Tx_ContextsGeolocation_OverwritableAdapter
 {
     /**
      * Internal Net_GeoIP instance used for querying country database.

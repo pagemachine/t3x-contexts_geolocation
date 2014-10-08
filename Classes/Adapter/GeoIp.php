@@ -24,7 +24,7 @@
  * @uses       http://www.php.net/manual/en/book.geoip.php
  */
 class Tx_Contexts_Geolocation_Adapter_GeoIp
-    extends Tx_Contexts_Geolocation_Adapter
+    extends Tx_ContextsGeolocation_OverwritableAdapter
 {
     /**
      * Constructor. Protected to prevent direct instanciation.
@@ -83,6 +83,11 @@ class Tx_Contexts_Geolocation_Adapter_GeoIp
      */
     public function getCountryCode($threeLetterCode = false)
     {
+        // Try overwrite information first
+        if ($countryCode = parent::getCountryCode($threeLetterCode)) {
+            return $countryCode;
+        }
+
         if ($threeLetterCode) {
             return geoip_country_code3_by_name($this->ip);
         }
