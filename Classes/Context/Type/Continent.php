@@ -45,7 +45,7 @@ class Tx_Contexts_Geolocation_Context_Type_Continent
     public function match(array $arDependencies = array())
     {
         list($bUseMatch, $bMatch) = $this->getMatchFromSession();
-        if ($bUseMatch) {
+        if ($bUseMatch && !$this->overrideValueAvailable()) {
             return $this->invert($bMatch);
         }
 
@@ -93,5 +93,30 @@ class Tx_Contexts_Geolocation_Context_Type_Continent
 
         return false;
     }
+
+    /**
+     * Returns true if the configured GP variable for this context is present in GP.
+     *
+     * @return boolean 
+     */
+    public function overrideValueAvailable() {
+
+        $settings = $this->getExtconfSettings();
+
+        if (t3lib_div::_GP($settings['overrideParameters.']['continent']) !== NULL) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return array EXTCONF settings for this extension
+     */
+    protected function getExtconfSettings() {
+
+      return $GLOBALS['TSFE']->TYPO3_CONF_VARS['EXTCONF']['contexts_geolocation'];
+
+    }    
+
 }
 ?>
