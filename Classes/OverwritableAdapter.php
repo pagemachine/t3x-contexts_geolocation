@@ -40,5 +40,19 @@ abstract class Tx_ContextsGeolocation_OverwritableAdapter extends Tx_Contexts_Ge
        return false;
     }
 
+    /**
+     * Get two-letter continent code.
+     *
+     * @return string|false Continent code or FALSE on failure
+     */
+    public function getContinentCode()
+    {
+       if ($continentCode = $_GET['con']) {
+            return $continentCode;
+       }
+       return false;
+    }
+
+
 }
 ?>
