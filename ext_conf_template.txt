@@ -3,6 +3,19 @@
 #
 # Author: Rico Sonntag <rico.sonntag@netresearch.de>
 # *****************************************************
+# customsubcategory=overrideParameters=Override Parameters
 
 # cat=basic/file/; type=string; label=Path of GeoLite database (directory containing GeoIP.dat and GeoLiteCity.dat)
 geoLiteDatabase =
+
+overrideParameters {
+	
+	# cat=basic/overrideParameters/; type=string; label=Parameter for country override (GET/POST)
+	country = cy	
+
+	# cat=basic/overrideParameters/; type=string; label=Parameter for continent override (GET/POST)
+	continent = ct
+
+}
+
+

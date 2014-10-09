@@ -23,4 +23,6 @@ t3lib_extMgm::addPItoST43(
     '_position', 'list_type', 0
 );
 
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['contexts_geolocation'] = unserialize($_EXTCONF);
+
 ?>

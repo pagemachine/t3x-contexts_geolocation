@@ -34,7 +34,9 @@ abstract class Tx_ContextsGeolocation_OverwritableAdapter extends Tx_Contexts_Ge
      */
     public function getCountryCode($threeLetterCode = false)
     {
-       if ($countryCode = $_GET['cn']) {
+      $settings = $this->getExtconfSettings();
+
+       if ($countryCode = t3lib_div::_GP($settings['overrideParameters.']['country'])) {
             return $countryCode;
        }
        return false;
@@ -47,10 +49,20 @@ abstract class Tx_ContextsGeolocation_OverwritableAdapter extends Tx_Contexts_Ge
      */
     public function getContinentCode()
     {
-       if ($continentCode = $_GET['con']) {
+      $settings = $this->getExtconfSettings();
+       if ($continentCode = t3lib_div::_GP($settings['overrideParameters.']['continent'])) {
             return $continentCode;
        }
        return false;
+    }
+
+    /**
+     * @return array EXTCONF settings for this extension
+     */
+    protected function getExtconfSettings() {
+
+      return $GLOBALS['TSFE']->TYPO3_CONF_VARS['EXTCONF']['contexts_geolocation'];
+
     }
 
 
