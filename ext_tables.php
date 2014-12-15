@@ -26,4 +26,24 @@ t3lib_extMgm::addPlugin(
     'list_type'
 );
 
+$LanguagesToContext = array(
+    'tx_contexts_geolocation_languages' => array(
+        'exclude' => 0,
+        'label' => 'Associated Languages',
+        'config' => array(
+            'type' => 'select',
+            'foreign_table' => 'sys_language',
+            'minitems' => 0,
+            'size' => 10,
+            'autoSizeMax' => 30,
+            'maxitems' => 9999,
+            'multiple' => 0,
+        )
+    )
+);
+
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_contexts_contexts', $LanguagesToContext);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tx_contexts_contexts', 'tx_contexts_geolocation_languages', '', 'after:alias');
+
 ?>

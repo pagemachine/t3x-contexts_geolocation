@@ -35,6 +35,47 @@
 class Tx_Contexts_Geolocation_Context_Type_Country
     extends Tx_Contexts_Context_Abstract
 {
+
+    /**
+     * Constructor - set the values from database row.
+     *
+     * @param array $arRow Database context row
+     *
+     * @return void
+     */
+    public function __construct($arRow = array())
+    {
+        parent::__construct($arRow);
+
+        if (!empty($arRow)) {
+            $languages = explode(",",$arRow['tx_contexts_geolocation_languages']);
+            foreach ($languages as $languageId) {
+                $this->languages[] = $languageId;
+            }
+        }
+    }    
+
+
+    /**
+     * @var array
+     */
+    protected $languages;
+
+    /**
+     * @return array
+     */
+    public function getLanguages() {
+        return $this->languages;
+    }
+
+    /**
+     * @param array $languages
+     * @return void
+     */
+    public function setLanguages( $languages) {
+        $this->languages = $languages;
+    }
+    
     /**
      * Check if the context is active now.
      *
