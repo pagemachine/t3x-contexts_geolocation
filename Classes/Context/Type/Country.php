@@ -75,6 +75,15 @@ class Tx_Contexts_Geolocation_Context_Type_Country
     public function setLanguages( $languages) {
         $this->languages = $languages;
     }
+
+    /**
+     * 
+     *
+     * @return array
+     */
+    public function getCountries() {
+        return explode(",", $this->getConfValue('field_countries'));
+    }
     
     /**
      * Check if the context is active now.
