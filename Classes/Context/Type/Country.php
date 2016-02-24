@@ -53,7 +53,7 @@ class Tx_Contexts_Geolocation_Context_Type_Country
                 $this->languages[] = $languageId;
             }
         }
-    }    
+    }
 
 
     /**
@@ -77,14 +77,14 @@ class Tx_Contexts_Geolocation_Context_Type_Country
     }
 
     /**
-     * 
+     *
      *
      * @return array
      */
     public function getCountries() {
         return explode(",", $this->getConfValue('field_countries'));
     }
-    
+
     /**
      * Check if the context is active now.
      *
@@ -113,31 +113,30 @@ class Tx_Contexts_Geolocation_Context_Type_Country
      */
     public function matchCountries()
     {
-        try {
-            $strCountries = trim($this->getConfValue('field_countries'));
+        $arCountries = $this->getCountries();
+        $strCountry = false;
 
-            if ($strCountries == '') {
-                //nothing configured? no match.
-                return false;
-            }
+        try {
 
             $geoip = Tx_Contexts_Geolocation_Adapter
                 ::getInstance($_SERVER['REMOTE_ADDR']);
 
-            $arCountries = explode(',', $strCountries);
-            $strCountry  = $geoip->getCountryCode(true);
-
-            if (($strCountry === false)
-                && in_array('*unknown*', $arCountries)
-            ) {
-                return true;
-            }
-            if (($strCountry !== false)
-                && in_array($strCountry, $arCountries)
-            ) {
-                return true;
-            }
+            $strCountry = $geoip->getCountryCode(true);
         } catch (Tx_Contexts_Geolocation_Exception $exception) {
+        }
+
+        $overrideCountry = $this->getOverrideValue();
+        $strCountry = $overrideCountry ? $overrideCountry : $strCountry;
+
+        if (($strCountry === false)
+            && in_array('*unknown*', $arCountries)
+        ) {
+            return true;
+        }
+        if (($strCountry !== false)
+            && in_array(strtoupper($strCountry), $arCountries)
+        ) {
+            return true;
         }
 
         return false;
@@ -146,16 +145,28 @@ class Tx_Contexts_Geolocation_Context_Type_Country
     /**
      * Returns true if the configured GP variable for this context is present in GP.
      *
-     * @return boolean 
+     * @return boolean
      */
     public function overrideValueAvailable() {
 
         $settings = $this->getExtconfSettings();
-        
+
         if (t3lib_div::_GP($settings['overrideParameters.']['country']) !== NULL) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Returns the override value from the current request
+     *
+     * @return string|NULL
+     */
+    protected function getOverrideValue() {
+
+      $settings = $this->getExtconfSettings();
+
+      return t3lib_div::_GP($settings['overrideParameters.']['country']);
     }
 
     /**
