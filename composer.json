@@ -1,0 +1,19 @@
+{
+  "name": "typo3-ter/contexts-geolocation",
+  "description": "Multi-channel contexts: Geolocation",
+  "type": "typo3-cms-extension",
+  "keywords": ["typo3", "contexts", "geolocation"],
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Christian Weiske, Marian Pollzien, Rico Sonntag",
+      "email": "typo3.org@netresearch.de"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "autoload": {
+    "classmap": ["Classes/"]
+  }
+}
